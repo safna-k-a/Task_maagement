@@ -17,25 +17,20 @@ use App\Http\Controllers\Auth\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('register',[RegisterController::class,'index']);
-Route::post('register',[RegisterController::class,'store'])->name('register');
+Route::get('register', [RegisterController::class, 'index']);
+Route::post('register', [RegisterController::class, 'store'])->name('register');
 
-Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
+Route::get('/', [LoginController::class, 'index'])->name('welcome');
+Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('tasks', TaskController::class);
-    Route::get('create_task', [TaskController::class,'create'])->name('create');
-    Route::get('/tasks/{task}/edit', [TaskController::class,'edit'])->name('tasks.edit');
+    Route::get('create_task', [TaskController::class, 'create'])->name('create');
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
-    Route::get('/tasks/{task}/assign', [TaskController::class,'assign_view'])->name('assign_view');
+    Route::get('/tasks/{task}/assign', [TaskController::class, 'assign_view'])->name('assign_view');
     Route::put('/assign_task', [TaskController::class, 'assign_task'])->name('assign');
-    Route::post('search',[TaskController::class,'search'])->name('search');
-    Route::post('/logout', [LoginController::class,'logout'])->name('logout');
+    Route::post('search', [TaskController::class, 'search'])->name('search');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-
-
